@@ -2,12 +2,15 @@ import pygame
 
 class Model:
 
+    Controllers = []
+    Button_States = []
+    Axis_States = []
+    Hat_States = []
+    Subscribers = []
+
     # Constructor
     def __init__(self):
-        self.Controllers = []
-        self.Button_States = []
-        self.Axis_States = []
-        self.Hat_States = []
+        pass
 
     # Add a controller
     def addController(self, deviceIndex):
@@ -19,7 +22,10 @@ class Model:
         self.Axis_States.append([False] * joy.get_numaxes)
         self.Hat_States.append([False] * joy.get_numhats)
 
+        self.notifySubscribers()
+
         print(f"{joy.get_name()} connected")
+
 
     # Remove a controller
     def removeController(self, deviceIndex):
@@ -31,18 +37,35 @@ class Model:
         self.Axis_States.pop(deviceIndex)
         self.Hat_States.pop(deviceIndex)
 
+        self.notifySubscribers()
+
         print(f"{joy.get_name()} disconnected")
+
+
+    # Add a subscriber
+    def addSubscriber(self, subscriber):
+        self.Subscribers.append(subscriber)
+
+
+    # Notify subscribers
+    def notifySubscribers(self):
+        for subscriber in self.Subscribers:
+            subscriber.update()
 
 
     # Setters
     def setButtonState(self, controllerID, buttonID, buttonState):
-        self.ButtonStates[controllerID][buttonID] = buttonState
+        self.Button_States[controllerID][buttonID] = buttonState
+        self.notifySubscribers()
 
     def setAxisState(self, controllerID, axisID, axisState):
         self.Axis_States[controllerID][axisID] = axisState
+        self.notifySubscribers()
+
 
     def setHatState(self, controllerID, hatID, hatState):
         self.Hat_States[controllerID][hatID] = hatState
+        self.notifySubscribers()
 
     # Getters
     def getControllers(self):
