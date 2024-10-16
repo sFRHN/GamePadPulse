@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QWidget, QLabel, QTextEdit, QVBoxLayout
+from PyQt6.QtWidgets import QWidget, QLabel, QTextEdit, QHBoxLayout
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap
 
@@ -18,14 +18,15 @@ class View(QWidget):
         self.controllerImage = QLabel(self)
         # self.controllerImage.setAlignment(Qt.AlignCenter)
         pixmap = QPixmap("assets/xbox-layout.png")
-        self.controllerImage.setPixmap(pixmap.scaled(700, 371))
+        self.controllerImage.setPixmap(pixmap.scaled(1000, 530))
         
         # Log area
         self.log = QTextEdit(self)
+        self.log.setFixedSize(320, 530)
         self.log.setReadOnly(True)
 
         # Layout
-        layout = QVBoxLayout()
+        layout = QHBoxLayout()
         layout.addWidget(self.controllerImage)
         layout.addWidget(self.log)
 
