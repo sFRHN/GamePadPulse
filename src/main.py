@@ -25,17 +25,16 @@ class Main:
         self.controller.setModel(self.model)
 
     def run(self):
+
         self.view.show()
 
-        while True:
-            try:
-                self.controller.listenForEvents()
-                self.app.processEvents()
-            except KeyboardInterrupt:
-                break
-            
+        # Run the event loop
+        while self.view.isVisible():
+            self.controller.listenForEvents()
+            self.app.processEvents()
+
         pygame.quit()
-        sys.exit(self.app.exec())
+        self.app.quit()
 
 
 # Entry point of the application
