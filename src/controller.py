@@ -10,7 +10,7 @@ class Controller:
         joysticks.init()
 
     def setModel(self, model):
-        model = model
+        self.model = model
 
     # Listen for events
     def listenForEvents(self):
