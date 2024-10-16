@@ -3,12 +3,14 @@ import pygame.joystick as joysticks
 
 class Controller:
 
+    model = None
+
     def __init__(self):
         self.model = None
         joysticks.init()
 
     def setModel(self, model):
-        self.model = model
+        model = model
 
     # Listen for events
     def listenForEvents(self):
