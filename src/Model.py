@@ -18,9 +18,9 @@ class Model:
         joy.init()
         self.Controllers.append(joy)
 
-        self.Button_States.append([False] * joy.get_numbuttons)
-        self.Axis_States.append([False] * joy.get_numaxes)
-        self.Hat_States.append([False] * joy.get_numhats)
+        self.Button_States.append([False] * joy.get_numbuttons())
+        self.Axis_States.append([False] * joy.get_numaxes())
+        self.Hat_States.append([False] * joy.get_numhats())
 
         self.notifySubscribers()
 
