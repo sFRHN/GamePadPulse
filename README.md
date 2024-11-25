@@ -42,26 +42,10 @@ Connect a controller and the application will automatically detect it and displa
 
 ## Project Structure
 
-- 
-
-main.py
-
- - Application entry point and main loop
-- 
-
-Model.py
-
- - Data model for controller states
-- 
-
-View.py
-
- - GUI implementation
-- 
-
-Controller.py
-
- - Input handling and event processing
+- main.py - Application entry point and main loop
+- Model.py - Data model for controller states
+- View.py - GUI implementation
+- Controller.py - Input handling and event processing
 
 ## Architecture
 
