@@ -92,14 +92,24 @@ class View(QWidget):
         scene.addItem(imageItem)
 
         # Set stroke color
+        custom_colors = {
+            "A": QPen(QColor(0, 255, 0, 100)),  # Green
+            "B": QPen(QColor(255, 0, 0, 100)),  # Red
+            "X": QPen(QColor(0, 0, 255, 100)),  # Blue
+            "Y": QPen(QColor(255, 255, 0, 100)),  # Yellow
+            "Xbox": QPen(QColor(255, 255, 255, 200))
+        }
         pen = QPen(QColor(73,73,73,255))                # Grey
 
         # Set fill color
         self.Pressed = QBrush(QColor(73,73,73,100))     # Fill
         self.Unpressed = QBrush(QColor(30,30,30,0))     # Same as background
         
-        for button in self.buttons.values():
-            button.setPen(pen)
+        for button_name, button in self.buttons.items():
+            if button_name in custom_colors:
+                button.setPen(custom_colors[button_name])
+            else:
+                button.setPen(pen)
             scene.addItem(button)
         for a in self.axis.values():
             a.setPen(pen)
