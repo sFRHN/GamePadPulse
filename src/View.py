@@ -137,15 +137,26 @@ class View(QWidget):
             else:
                 self.buttons[button_name].setBrush(self.Unpressed)
 
+        print("")
 
         # Set color of analogs based on pressed status
         for axis in range(controller.get_numaxes()):
             axis_name = self.AXIS_NAMES.get(axis, f"Unknown Axis {axis}")
-            axis_value = round(self.model.Axis_States[controller_id][axis], 2)
-            if axis_value:
-                self.axis[axis_name].setBrush(self.Pressed)
+            axis_value = round(self.model.Axis_States[controller_id][axis], 1)
+            
+            print(axis_value)
+
+            if axis == 4 or axis == 5:
+                if axis_value != -1 and axis_value != 0:
+                    self.axis[axis_name].setBrush(self.Pressed)
+                else:
+                    self.axis[axis_name].setBrush(self.Unpressed)
+
             else:
-                self.axis[axis_name].setBrush(self.Unpressed)
+                if axis_value:
+                    self.axis[axis_name].setBrush(self.Pressed)
+                else:
+                    self.axis[axis_name].setBrush(self.Unpressed)
 
 
         # Set color of DPad directional buttons based on pressed status
