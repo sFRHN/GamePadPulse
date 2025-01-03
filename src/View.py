@@ -65,8 +65,8 @@ class View(QWidget):
     dpad = {
         DPAD[(0,1)]: QGraphicsRectItem(398, 261, 31, 34),                              # DPad_UP
         DPAD[(0,-1)]: QGraphicsRectItem(398, 325, 31, 34),                             # DPad_DOWN
-        DPAD[(1,0)]: QGraphicsRectItem(364, 294, 34, 32),                              # DPad_LEFT
-        DPAD[(-1,0)]: QGraphicsRectItem(429, 294, 34, 32),                             # DPad_RIGHT
+        DPAD[(1,0)]: QGraphicsRectItem(429, 294, 34, 32),                              # DPad_LEFT
+        DPAD[(-1,0)]: QGraphicsRectItem(364, 294, 34, 32),                             # DPad_RIGHT
     }
 
     
@@ -141,7 +141,7 @@ class View(QWidget):
         # Set color of analogs based on pressed status
         for axis in range(controller.get_numaxes()):
             axis_name = self.AXIS_NAMES.get(axis, f"Unknown Axis {axis}")
-            axis_value = round(self.model.Axis_States[controller_id][axis], 1)
+            axis_value = round(self.model.Axis_States[controller_id][axis], 2)
             if axis_value:
                 self.axis[axis_name].setBrush(self.Pressed)
             else:
