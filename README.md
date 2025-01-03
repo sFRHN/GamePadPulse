@@ -2,6 +2,8 @@
 
 A Python application that provides real-time visualization and monitoring of gamepad/controller inputs using PyQt6 for the GUI and Pygame for controller input handling.
 
+![Visual Editor Preview](sample.png)
+
 ## Features
 
 - Real-time monitoring of Xbox and other game controllers
