@@ -1,6 +1,7 @@
-from PyQt6.QtWidgets import QWidget, QLabel, QTextEdit, QHBoxLayout
+from PyQt6.QtWidgets import QWidget, QLabel, QTextEdit, QVBoxLayout, QGraphicsView, QGraphicsScene,\
+                            QGraphicsPixmapItem, QGraphicsRectItem, QGraphicsEllipseItem, QGraphicsTextItem
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QPixmap
+from PyQt6.QtGui import QPixmap, QBrush, QColor, QMouseEvent
 
 class View(QWidget):
 
@@ -43,26 +44,53 @@ class View(QWidget):
 
 
     def InitializeUI(self):
-        # Set fixed window size
-        # self.setFixedSize(800, 800)
         self.setWindowTitle("GamePad Pulse")
 
-        # Controller image area
-        self.controllerImage = QLabel(self)
-        # self.controllerImage.setAlignment(Qt.AlignCenter)
-        pixmap = QPixmap("assets/xbox-layout.png")
-        self.controllerImage.setPixmap(pixmap.scaled(1000, 530))
+        # Creating a graphics view
+        graphicsView = QGraphicsView(self)
+        graphicsView.setFixedSize(1100, 600)
+
+        # Creating a graphics scene
+        scene = QGraphicsScene(self)
+        graphicsView.setScene(scene)
+
+        # Adding the controller image to the scene
+        controllerImage = QPixmap("assets/xbox-layout.png")
+        imageItem = QGraphicsPixmapItem(controllerImage)
         
-        # Log area
-        self.log = QTextEdit(self)
-        self.log.setFixedSize(320, 530)
-        self.log.setReadOnly(True)
+        scene.addItem(imageItem)
+
+        # Button rectangles
+        buttons = [
+            QGraphicsRectItem(31, -12, 45, 40),                             # LT
+            QGraphicsRectItem(31, 55, 45, 40),                              # LB
+            QGraphicsRectItem(918, -12, 45, 40),                            # RT
+            QGraphicsRectItem(918, 55, 45, 40),                             # RB
+            QGraphicsEllipseItem(582 - 84/2, 303 - 84/2, 84, 84),           # RS
+            QGraphicsEllipseItem(582 - 53/2, 303 - 53/2, 53, 53),           # RSB
+            QGraphicsEllipseItem(337 - 84/2, 208.5 - 84/2, 84, 84),         # LS
+            QGraphicsEllipseItem(337 - 53/2, 208.5 - 53/2, 53, 53),         # LSB
+            QGraphicsRectItem(398, 261, 31, 34),                            # DPad_UP
+            QGraphicsRectItem(398, 325, 31, 34),                            # DPad_DOWN
+            QGraphicsRectItem(364, 294, 34, 32),                            # DPad_LEFT
+            QGraphicsRectItem(429, 294, 34, 32),                            # DPad_RIGHT
+            QGraphicsEllipseItem(451 - 32/2, 208 - 32/2, 32, 32),           # Select
+            QGraphicsEllipseItem(499 - 52/2, 145 - 52/2, 52, 52),           # Xbox
+            QGraphicsEllipseItem(543 - 32/2, 208 - 32/2, 32, 32),           # Start
+            QGraphicsEllipseItem(659.5 - 41/2, 251 - 41/2, 41, 41),         # A
+            QGraphicsEllipseItem(702 - 41/2, 208.5 - 41/2, 41, 41),         # B
+            QGraphicsEllipseItem(617 - 41/2, 208.5 - 41/2, 41, 41),         # X
+            QGraphicsEllipseItem(659.5 - 41/2, 166 - 41/2, 41, 41),         # Y
+        ]
+        for button in buttons:
+            scene.addItem(button)
+        
+        # Controller Name
+        controllerName = QLabel()
 
         # Layout
-        layout = QHBoxLayout()
-        layout.addWidget(self.controllerImage)
-        layout.addWidget(self.log)
-
+        layout = QVBoxLayout()
+        layout.addWidget(graphicsView)
         self.setLayout(layout)
 
 
@@ -114,6 +142,9 @@ class View(QWidget):
     def setModel(self, model):
         self.model = model
 
+    def mousePressEvent(self, event: QMouseEvent):
+        if event.button() == Qt.MouseButton.LeftButton:
+            print(f"Mouse pressed at position: {event.position().toPoint()}")
 
     def update(self):
         self.draw()
